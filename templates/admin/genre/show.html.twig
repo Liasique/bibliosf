@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Genre{% endblock %}
+
+{% block body %}
+    <h1>Genre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ genre.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ genre.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Termes</th>
+                <td>{{ genre.termes }}</td>
+            </tr>
+
+            <tr>
+            <th>Livres</th>
+            <td>
+            <table class="table">
+            <thead class="table-dark">
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+            </thead>
+            <tbody>
+            {% for livre in genre.livres %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_admin_livre_show', {'id' : livre.id }) }}">{{ livre.id }}</a>
+                </td>
+                <td> {{ livre.titre }}</td>
+                <td>{{ livre.auteur.prenom ~ " " ~ livre.auteur.nom  }}</td>
+            </tr>
+            {% else %}
+                <tr>
+                <td colspan= "3" > Acune livre de ce genre dans la biblioteque</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_genre_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_genre_edit', {'id': genre.id}) }}">edit</a>
+
+    {{ include('admin/genre/_delete_form.html.twig') }}
+{% endblock %}
